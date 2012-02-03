@@ -188,6 +188,35 @@ describe('tests',
                  value_of(cursor.down().down().down().up().up().up().canUp()).should_be(false);
              },
 
+             'canNUp/canNDown with arrays': function() {
+                 var cursor = TreeCursor.arrayToCursor([[[1]]]);
+                 value_of(cursor.node).should_be([[[1]]]);
+                 value_of(cursor.canNDown(2)).should_be(true);
+                 value_of(cursor.canNDown(10)).should_be(false);
+                 value_of(cursor.nDown(2).canNUp(2)).should_be(true);
+             },
+
+             'nUp/nDown with arrays': function() {
+                 var cursor = TreeCursor.arrayToCursor([[[1]]]);
+                 value_of(cursor.node).should_be([[[1]]]);
+                 value_of(cursor.nDown(2).node).should_be([1]);
+                 value_of(cursor.nDown(2).nUp(2).node).should_be([[[1]]]);
+             },
+
+             'nRight/nLeft with arrays': function() {
+                 var cursor = TreeCursor.arrayToCursor([1, 2, 3, 4, [5], 6]);
+                 value_of(cursor.node).should_be([1, 2, 3, 4, [5], 6]);
+                 value_of(cursor.down().nRight(2).node).should_be(3);
+                 value_of(cursor.down().nRight(2).nLeft(2).node).should_be(1);
+             },
+
+             'canNRight/canNLeft with arrays': function() {
+                 var cursor = TreeCursor.arrayToCursor([1, 2, 3, 4, [5], 6]);
+                 value_of(cursor.node).should_be([1, 2, 3, 4, [5], 6]);
+                 value_of(cursor.down().canNRight(2)).should_be(true);
+                 value_of(cursor.down().canNRight(10)).should_be(false);
+                 value_of(cursor.down().nRight(4).canNLeft(2)).should_be(true);
+             },
              
              'inserting down' : function() {
                  var cursor = TreeCursor.arrayToCursor([]);
