@@ -156,49 +156,47 @@ var TreeCursor = (function() {
 
     TreeCursor.prototype.chain = function(m, i) {
         var n = this;
-        while(i--) n = n[m](); 
+        while(i--) n = call(m); 
         return n;
     };
 
-    TreeCursor.prototype.canChain = function(m, i) {
+    TreeCursor.prototype.canChain = function(m, mtest, i) {
         var n = this;
         i--;
-        //This creates the name of the action method (e.g. up) from the test method (e.g. canUp)
-        //We could problaly unify the chain and canChain method but that would get really ugly
-        while (n[m]() && (i--)) { n = n[m.slice(3).toLowerCase()](); }  
-        return n[m]();
+        while (call(mtest) && (i--)) { n = call(m); }  
+        return call(m);
     };    
 
     TreeCursor.prototype.canNUp = function(i) {
-        return this.canChain("canUp", i);
+        return this.canChain(this.up, this.canUp, i);
     };
 
     TreeCursor.prototype.nUp = function(i) {
-        return this.chain("up", i);
+        return this.chain(this.up, i);
     };
 
     TreeCursor.prototype.canNDown = function(i) {
-        return this.canChain("canDown", i);
+        return this.canChain(this.down, this.canDown, i);
     };
 
     TreeCursor.prototype.nDown = function(i) {
-        return this.chain("down", i);
+        return this.chain(this.down, i);
     };
                
     TreeCursor.prototype.canNRight = function(i) {
-        return this.canChain("canRight", i);
+        return this.canChain(this.right, this.canRight, i);
     };
 
     TreeCursor.prototype.nRight = function(i) {
-        return this.chain("right", i);
+        return this.chain(this.right, i);
     };
 
     TreeCursor.prototype.canNLeft = function(i) {
-        return this.canChain("canLeft", i);
+        return this.canChain(this.left, this.canLeft, i);
     };
 
     TreeCursor.prototype.nLeft = function(i) {
-        return this.chain("left", i);
+        return this.chain(this.left, i);
     };
     
 
