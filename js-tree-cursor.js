@@ -156,15 +156,15 @@ var TreeCursor = (function() {
 
     TreeCursor.prototype.chain = function(m, i) {
         var n = this;
-        while(i--) n = call(m); 
+        while(i--) n = m.call(n); 
         return n;
     };
 
     TreeCursor.prototype.canChain = function(m, mtest, i) {
         var n = this;
         i--;
-        while (call(mtest) && (i--)) { n = call(m); }  
-        return call(m);
+        while (mtest.call(n) && (i--)) { n = m.call(n); }  
+        return mtest.call(n);
     };    
 
     TreeCursor.prototype.canNUp = function(i) {
